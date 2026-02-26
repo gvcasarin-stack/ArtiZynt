@@ -14,15 +14,15 @@
 
     /* ─── Variáveis de cor (baseadas no modelo da pre-sell) ─── */
     :root {
-      --teal:       #3aaa97;
-      --teal-dark:  #2e8b79;
+      --teal:       #e07010;
+      --teal-dark:  #c05c00;
       --gray-btn:   #d8d8d8;
       --gray-hover: #c4c4c4;
       --modal-bg:   #ffffff;
       --overlay:    rgba(0, 0, 0, 0.55);
       --text-dark:  #1a1a1a;
       --text-mid:   #444444;
-      --link-color: #3aaa97;
+      --link-color: #c05c00;
       --gold-light: #f5e6c8;
       --gold-mid:   #e8d09a;
       --red-accent: #c0392b;
@@ -55,39 +55,6 @@
       padding: 18px 40px 10px;
     }
 
-    /* Coluna esquerda – imagem corpo humano */
-    .bg-col-left {
-      flex: 0 0 30%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-end;
-      height: 100%;
-    }
-    .bg-body-img {
-      width: 280px;
-      height: 320px;
-      background: radial-gradient(ellipse at 40% 40%, rgba(255,80,0,0.25) 0%, transparent 65%),
-                  linear-gradient(180deg, #c8bfb0 0%, #a89880 100%);
-      border-radius: 50% 50% 40% 40% / 60% 60% 40% 40%;
-      position: relative;
-      overflow: hidden;
-    }
-    .bg-joint-glow {
-      position: absolute;
-      top: 28%;
-      left: 22%;
-      width: 110px;
-      height: 110px;
-      background: radial-gradient(circle, rgba(255,60,0,0.7) 0%, rgba(255,120,0,0.3) 50%, transparent 75%);
-      border-radius: 50%;
-      animation: pulse 2.5s ease-in-out infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { transform: scale(1);   opacity: 0.85; }
-      50%       { transform: scale(1.15); opacity: 1;   }
-    }
-
     /* Caixa do produto (centro-esquerda) */
     .bg-product-box {
       position: absolute;
@@ -116,7 +83,7 @@
 
     /* Coluna central – benefícios */
     .bg-col-center {
-      flex: 0 0 40%;
+      flex: 1 1 60%;
       padding: 30px 20px 0;
     }
     .bg-tagline {
@@ -346,7 +313,7 @@
     .modal-title {
       font-size: 18px;
       font-weight: 700;
-      color: #1a6b5e;
+      color: #b04800;
     }
     .modal-close {
       color: #999;
@@ -457,13 +424,6 @@
   <div id="producer-bg" aria-hidden="true">
 
     <div class="bg-hero">
-
-      <!-- Esquerda: corpo humano -->
-      <div class="bg-col-left">
-        <div class="bg-body-img">
-          <div class="bg-joint-glow"></div>
-        </div>
-      </div>
 
       <!-- Centro: nome + benefícios -->
       <div class="bg-col-center">
