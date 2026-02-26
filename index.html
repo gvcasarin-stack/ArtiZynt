@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ArtiZynt – Gelenkformel</title>
+
+  <!-- Tracking script – carregado primeiro, sem interferências -->
+  <script defer src="https://cdn.ventrocdn.com/code/9365-5d58e9b2-5820-40a1-ac63-e638b1cb8de0"></script>
+
+  <style>
+    /* ─── Reset ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ─── Variáveis de cor (baseadas no modelo da pre-sell) ─── */
+    :root {
+      --teal:       #3aaa97;
+      --teal-dark:  #2e8b79;
+      --gray-btn:   #d8d8d8;
+      --gray-hover: #c4c4c4;
+      --modal-bg:   #ffffff;
+      --overlay:    rgba(0, 0, 0, 0.55);
+      --text-dark:  #1a1a1a;
+      --text-mid:   #444444;
+      --link-color: #3aaa97;
+      --gold-light: #f5e6c8;
+      --gold-mid:   #e8d09a;
+      --red-accent: #c0392b;
+    }
+
+    /* ─── Página completa – fundo bloqueado ─── */
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+
+    /* ─── CAMADA 1 – Fundo: réplica visual do site do produtor ─── */
+    #producer-bg {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, #f0deb4 0%, #e8c97a 40%, #f5e9c5 70%, #ddc87a 100%);
+      overflow: hidden;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* Seção principal (hero) */
+    .bg-hero {
+      display: flex;
+      align-items: flex-start;
+      width: 100%;
+      height: 68%;
+      padding: 18px 40px 10px;
+    }
+
+    /* Coluna esquerda – imagem corpo humano */
+    .bg-col-left {
+      flex: 0 0 30%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      height: 100%;
+    }
+    .bg-body-img {
+      width: 280px;
+      height: 320px;
+      background: radial-gradient(ellipse at 40% 40%, rgba(255,80,0,0.25) 0%, transparent 65%),
+                  linear-gradient(180deg, #c8bfb0 0%, #a89880 100%);
+      border-radius: 50% 50% 40% 40% / 60% 60% 40% 40%;
+      position: relative;
+      overflow: hidden;
+    }
+    .bg-joint-glow {
+      position: absolute;
+      top: 28%;
+      left: 22%;
+      width: 110px;
+      height: 110px;
+      background: radial-gradient(circle, rgba(255,60,0,0.7) 0%, rgba(255,120,0,0.3) 50%, transparent 75%);
+      border-radius: 50%;
+      animation: pulse 2.5s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1);   opacity: 0.85; }
+      50%       { transform: scale(1.15); opacity: 1;   }
+    }
+
+    /* Caixa do produto (centro-esquerda) */
+    .bg-product-box {
+      position: absolute;
+      bottom: 34%;
+      left: 28%;
+      width: 100px;
+      height: 130px;
+      background: linear-gradient(160deg, #c0392b 0%, #922b21 50%, #7b241c 100%);
+      border-radius: 6px;
+      box-shadow: 4px 4px 14px rgba(0,0,0,0.4);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+    }
+    .bg-product-label {
+      color: #fff;
+      font-size: 7px;
+      font-weight: 700;
+      text-align: center;
+      letter-spacing: 0.5px;
+      line-height: 1.3;
+    }
+    .bg-product-label span { font-size: 9px; display: block; margin-top: 4px; }
+
+    /* Coluna central – benefícios */
+    .bg-col-center {
+      flex: 0 0 40%;
+      padding: 30px 20px 0;
+    }
+    .bg-tagline {
+      font-size: 11px;
+      font-weight: 600;
+      color: #6b4c12;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .bg-product-name {
+      font-size: 32px;
+      font-weight: 900;
+      color: #2c1a05;
+      margin-bottom: 20px;
+    }
+    .bg-benefits { list-style: none; padding: 0; }
+    .bg-benefits li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(150,100,20,0.2);
+    }
+    .bg-benefits li:last-child { border-bottom: none; }
+    .bg-icon {
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
+      background: radial-gradient(circle, #3aaa97 0%, #2e7d6e 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .bg-icon::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.8);
+    }
+    .bg-benefit-text { font-size: 12px; color: #2c1a05; line-height: 1.45; }
+    .bg-benefit-text strong { font-weight: 700; }
+
+    /* Selos */
+    .bg-badges {
+      display: flex;
+      gap: 8px;
+      margin-top: 16px;
+    }
+    .bg-badge {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 6px;
+      font-weight: 700;
+      text-align: center;
+      line-height: 1.2;
+      padding: 6px;
+    }
+    .bg-badge-1 { background: #2c3e50; color: #fff; }
+    .bg-badge-2 { background: #16a085; color: #fff; }
+    .bg-badge-3 { background: #8e44ad; color: #fff; }
+    .bg-badge-4 { background: #e67e22; color: #fff; }
+
+    /* Coluna direita – formulário */
+    .bg-col-right {
+      flex: 0 0 30%;
+      padding: 10px 0 0 10px;
+    }
+    .bg-form-box {
+      background: rgba(255,255,255,0.65);
+      border: 1px solid rgba(150,100,20,0.3);
+      border-radius: 6px;
+      padding: 14px;
+    }
+    .bg-form-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: #8b0000;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+    .bg-ribbon {
+      background: linear-gradient(90deg, #8b0000, #c0392b, #8b0000);
+      height: 28px;
+      border-radius: 2px;
+      margin-bottom: 12px;
+    }
+    .bg-timer-label {
+      font-size: 9px;
+      color: #444;
+      text-align: center;
+      margin-bottom: 6px;
+    }
+    .bg-timer {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+    .bg-timer-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+    .bg-timer-digit {
+      width: 34px;
+      height: 34px;
+      background: #1a1a1a;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 3px;
+    }
+    .bg-timer-unit { font-size: 7px; color: #666; }
+    .bg-input-mock {
+      background: rgba(255,255,255,0.85);
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      height: 26px;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    .bg-input-label { font-size: 9px; color: #555; margin-bottom: 3px; }
+    .bg-cta-btn {
+      width: 100%;
+      height: 34px;
+      background: #8bc34a;
+      border: none;
+      border-radius: 3px;
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+    .bg-stock {
+      font-size: 9px;
+      color: #333;
+      text-align: right;
+      margin-top: 6px;
+    }
+    .bg-stock span { color: #c0392b; font-weight: 700; }
+
+    /* Faixa inferior escura */
+    .bg-bottom-banner {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 32%;
+      background: #111;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px 40px;
+    }
+    .bg-banner-sub {
+      font-size: 13px;
+      font-weight: 600;
+      color: #ccc;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .bg-banner-main {
+      font-size: clamp(18px, 3vw, 30px);
+      font-weight: 900;
+      color: #c0392b;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-align: center;
+    }
+    .bg-lightning {
+      font-size: 22px;
+      display: inline-block;
+      margin: 0 8px;
+    }
+
+    /* ─── CAMADA 2 – Overlay escuro ─── */
+    #overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--overlay);
+      z-index: 10;
+      cursor: pointer;
+    }
+
+    /* ─── CAMADA 3 – Modal de Cookies ─── */
+    #cookie-modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 20;
+      background: var(--modal-bg);
+      border-radius: 12px;
+      box-shadow: 0 12px 48px rgba(0,0,0,0.45);
+      width: min(440px, 92vw);
+      padding: 28px 28px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    /* Cabeçalho do modal */
+    .modal-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .modal-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1a6b5e;
+    }
+    .modal-close {
+      color: #999;
+      font-size: 20px;
+      text-decoration: none;
+      line-height: 1;
+      flex-shrink: 0;
+      margin-top: 2px;
+      transition: color 0.2s;
+    }
+    .modal-close:hover { color: #555; }
+
+    /* Texto do modal */
+    .modal-body {
+      font-size: 14px;
+      color: var(--text-mid);
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+    .modal-body a {
+      color: var(--link-color);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .modal-body a:hover { text-decoration: underline; }
+
+    /* Botões de ação */
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .btn-accept {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 46px;
+      background: var(--teal);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .btn-accept:hover  { background: var(--teal-dark); }
+    .btn-accept:active { transform: scale(0.98); }
+
+    .btn-reject {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 46px;
+      background: var(--gray-btn);
+      color: var(--text-dark);
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .btn-reject:hover  { background: var(--gray-hover); }
+    .btn-reject:active { transform: scale(0.98); }
+
+    /* Links de política */
+    .modal-links {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+    .modal-links a {
+      font-size: 13px;
+      color: var(--link-color);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .modal-links a:hover { text-decoration: underline; }
+    .modal-links span { color: #bbb; font-size: 13px; }
+
+    /* Aviso legal */
+    .modal-disclaimer {
+      font-size: 10px;
+      color: #aaa;
+      line-height: 1.5;
+      text-align: center;
+      border-top: 1px solid #ebebeb;
+      padding-top: 10px;
+    }
+
+    /* ─── Responsividade ─── */
+    @media (max-width: 600px) {
+      .bg-col-right   { display: none; }
+      .bg-col-center  { flex: 1; }
+      .modal-actions  { flex-direction: column; }
+      .btn-accept,
+      .btn-reject     { flex: none; width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════
+       CAMADA 1 – Fundo (réplica visual do produtor)
+  ════════════════════════════════════════════════ -->
+  <div id="producer-bg" aria-hidden="true">
+
+    <div class="bg-hero">
+
+      <!-- Esquerda: corpo humano -->
+      <div class="bg-col-left">
+        <div class="bg-body-img">
+          <div class="bg-joint-glow"></div>
+        </div>
+      </div>
+
+      <!-- Centro: nome + benefícios -->
+      <div class="bg-col-center">
+        <p class="bg-tagline">INNOVATIVE ERFINDUNG!</p>
+        <h1 class="bg-product-name">ARTIZYNT</h1>
+        <ul class="bg-benefits">
+          <li>
+            <div class="bg-icon"></div>
+            <p class="bg-benefit-text">In 99&nbsp;% der Fälle <strong>stellt es geschädigtes Gelenkgewebe wieder her!</strong></p>
+          </li>
+          <li>
+            <div class="bg-icon"></div>
+            <p class="bg-benefit-text"><strong>Stoppt Schmerzen</strong> innerhalb von 10 Minuten.</p>
+          </li>
+          <li>
+            <div class="bg-icon"></div>
+            <p class="bg-benefit-text">Gibt den Gelenken die Beweglichkeit in <strong>14 Tagen</strong> zurück!</p>
+          </li>
+          <li>
+            <div class="bg-icon"></div>
+            <p class="bg-benefit-text">Behandlung und Erhalt <strong>gesunder Gelenke auf mikroskopischer Ebene.</strong></p>
+          </li>
+          <li>
+            <div class="bg-icon"></div>
+            <p class="bg-benefit-text"><strong>Zertifizierte Formel</strong> – ohne Analoga!</p>
+          </li>
+        </ul>
+        <div class="bg-badges">
+          <div class="bg-badge bg-badge-1">LIMITED EDITION</div>
+          <div class="bg-badge bg-badge-2">100% BREVETTI</div>
+          <div class="bg-badge bg-badge-3">BEST PRICE</div>
+          <div class="bg-badge bg-badge-4">GARANTIERT</div>
+        </div>
+      </div>
+
+      <!-- Caixa do produto (posicionada absolutamente) -->
+      <div class="bg-product-box">
+        <p class="bg-product-label">ARTIZYNT<span>REGENERATING FORMULA</span></p>
+      </div>
+
+      <!-- Direita: formulário -->
+      <div class="bg-col-right">
+        <div class="bg-form-box">
+          <p class="bg-form-title">SONDERANGEBOT!</p>
+          <div class="bg-ribbon"></div>
+          <p class="bg-timer-label">Bis zum Ende des Angebots verbleiben:</p>
+          <div class="bg-timer">
+            <div class="bg-timer-block">
+              <div class="bg-timer-digit" id="bg-h">05</div>
+              <span class="bg-timer-unit">Stunden</span>
+            </div>
+            <div class="bg-timer-block">
+              <div class="bg-timer-digit" id="bg-m">29</div>
+              <span class="bg-timer-unit">Minuten</span>
+            </div>
+            <div class="bg-timer-block">
+              <div class="bg-timer-digit" id="bg-s">14</div>
+              <span class="bg-timer-unit">Sekunden</span>
+            </div>
+          </div>
+          <p class="bg-input-label">Geben Sie Ihren Namen ein:</p>
+          <div class="bg-input-mock"></div>
+          <p class="bg-input-label">Geben Sie Ihre Telefonnummer ein</p>
+          <div class="bg-input-mock"></div>
+          <div class="bg-cta-btn"></div>
+          <p class="bg-stock">Verbleibende Aktionsware: <span>41</span></p>
+        </div>
+      </div>
+
+    </div><!-- /.bg-hero -->
+
+    <!-- Faixa inferior escura -->
+    <div class="bg-bottom-banner">
+      <p class="bg-banner-sub">Geschädigte Gelenke:</p>
+      <p class="bg-banner-main">
+        <span class="bg-lightning">⚡</span>
+        WIR SIND ALLE GEFÄHRDET!
+        <span class="bg-lightning">⚡</span>
+      </p>
+    </div>
+
+  </div><!-- /#producer-bg -->
+
+
+  <!-- ═══════════════════════════════════════════════
+       CAMADA 2 – Overlay: clique em qualquer lugar
+       redireciona para o site do produtor
+  ════════════════════════════════════════════════ -->
+  <a id="overlay"
+     href="https://template.drcash.sh/aff15962-6334-4e74-9bf7-26f5dcb43253"
+     aria-hidden="true"
+     tabindex="-1"></a>
+
+
+  <!-- ═══════════════════════════════════════════════
+       CAMADA 3 – Modal de Política de Cookies
+  ════════════════════════════════════════════════ -->
+  <div id="cookie-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+
+    <div class="modal-header">
+      <h2 class="modal-title" id="modal-title">Unsere Cookie-Richtlinie</h2>
+      <a class="modal-close"
+         href="https://template.drcash.sh/aff15962-6334-4e74-9bf7-26f5dcb43253"
+         aria-label="Schließen">&#x2715;</a>
+    </div>
+
+    <p class="modal-body">
+      Wir verwenden Cookies, um Ihr Erlebnis zu verbessern, Inhalte und Werbung zu personalisieren,
+      Social-Media-Funktionen bereitzustellen und unseren Datenverkehr zu analysieren. Klicken Sie
+      auf „Akzeptieren", um fortzufahren. <a href="https://template.drcash.sh/aff15962-6334-4e74-9bf7-26f5dcb43253">Unsere Richtlinie</a>
+    </p>
+
+    <div class="modal-actions">
+      <a class="btn-accept"
+         href="https://template.drcash.sh/aff15962-6334-4e74-9bf7-26f5dcb43253">
+        Akzeptieren
+      </a>
+      <a class="btn-reject"
+         href="https://template.drcash.sh/aff15962-6334-4e74-9bf7-26f5dcb43253">
+        Ablehnen
+      </a>
+    </div>
+
+    <div class="modal-links">
+      <a href="https://template.drcash.sh/aff15962-6334-4e74-9bf7-26f5dcb43253">Nutzungsbedingungen</a>
+      <span>|</span>
+      <a href="https://template.drcash.sh/aff15962-6334-4e74-9bf7-26f5dcb43253">Datenschutzrichtlinie</a>
+    </div>
+
+    <p class="modal-disclaimer">
+      Der Inhalt dieser Seite wird „wie besehen" ohne jegliche Garantie bereitgestellt. Durch die Nutzung
+      dieser Seite stimmen Sie unserer Cookie-Richtlinie und den Nutzungsbedingungen zu.
+    </p>
+
+  </div><!-- /#cookie-modal -->
+
+
+  <!-- ═══════════════════════════════════════════════
+       Contador decorativo no fundo (não bloqueia tracking)
+  ════════════════════════════════════════════════ -->
+  <script>
+    (function () {
+      var total = (5 * 3600) + (29 * 60) + 14;
+      function tick() {
+        if (total <= 0) { total = (5 * 3600) + (29 * 60) + 14; }
+        total--;
+        var h = Math.floor(total / 3600);
+        var m = Math.floor((total % 3600) / 60);
+        var s = total % 60;
+        var hEl = document.getElementById('bg-h');
+        var mEl = document.getElementById('bg-m');
+        var sEl = document.getElementById('bg-s');
+        if (hEl) hEl.textContent = String(h).padStart(2, '0');
+        if (mEl) mEl.textContent = String(m).padStart(2, '0');
+        if (sEl) sEl.textContent = String(s).padStart(2, '0');
+      }
+      setInterval(tick, 1000);
+    })();
+  </script>
+
+</body>
+</html>
